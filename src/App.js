@@ -1,22 +1,26 @@
-import logo from './logo.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import './App.css';
+import Navbar from './components/Navbar';
+import Views from './views/Views';
+import { getEvents } from './store/actions/eventActions';
 
 function App() {
+
+  const dispatch = useDispatch()
+  const token = useSelector(state => state.auth.token)
+
+  useEffect(() => {
+    dispatch(getEvents(token))
+  }, [dispatch, token])
+
   return (
     <div className="App">
+      <Navbar />
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <div className="container">
+          <Views />
+        </div>
       </header>
     </div>
   );
